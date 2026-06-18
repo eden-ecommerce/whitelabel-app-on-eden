@@ -1,0 +1,63 @@
+# dependencies
+node_modules/
+
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
+# next.js
+.next/
+out/
+
+# production / build output
+build/
+dist/
+
+# environment & secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+credentials*.json
+secrets.json
+.secrets/
+service-account*.json
+
+# deploy hosts
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# logs & debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# test / coverage
+coverage/
+.nyc_output/
+
+# caches & turbo
+.turbo/
+.cache/
+
+# OS & editor dotfiles (local only — repo dotfiles like .github/ stay tracked)
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+!.vscode/extensions.json
+.cursor/
+*.swp
+*.swo
+*~
+
+# misc local
+*.local
