@@ -22,8 +22,10 @@ const nextConfig: NextConfig = {
   // development assets MUST be served from the same origin the page is served
   // from — hardcoding `http://localhost:3000` here breaks the v0 preview and
   // any proxied/sandbox host because the browser can't reach localhost.
+  // Note: basePath should NOT be set here because Vercel previews run in production
+  // mode but NOT behind the Cloudflare Worker. Only the actual production deployment
+  // behind the Worker needs the base path routing, which is handled at the Worker level.
   assetPrefix: process.env.NODE_ENV === "production" ? ASSET_BASE_URL : undefined,
-  basePath: process.env.NODE_ENV === "production" ? "/events" : undefined,
   // v0 iterates quickly — builds tolerate TS errors during dev.
   // Before deploy: run `pnpm predeploy` (ts-check + lint + build) and fix all errors.
   typescript: {
