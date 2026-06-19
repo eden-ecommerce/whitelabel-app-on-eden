@@ -1,3 +1,4 @@
+import { FavouritesLink } from "@components/events/FavouritesLink";
 import { NsLink } from "@components/ns-link";
 import { NAMESPACE_PATH } from "@lib/config";
 import { ShoppingBag, User } from "lucide-react";
@@ -39,6 +40,7 @@ export function EdenHeader() {
           </a>
 
           <div className="ml-auto flex items-center gap-5">
+            <FavouritesLink href={`${NAMESPACE_PATH}/favourites`} />
             <a
               href="https://www.eden.co.uk/account"
               className="flex items-center gap-1.5 text-sm text-foreground hover:text-primary"
