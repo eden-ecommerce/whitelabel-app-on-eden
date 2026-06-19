@@ -48,11 +48,11 @@ export function EventCard({ event }: { event: EventHit }) {
           </div>
         )}
         {event.online ? (
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground">
+          <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground">
             <Wifi className="h-3 w-3" /> Online
           </span>
         ) : null}
-        <div className="absolute right-3 top-3">
+        <div className="absolute right-3 top-3 z-10">
           <FavouriteButton eventId={event.id} variant="icon" />
         </div>
       </div>

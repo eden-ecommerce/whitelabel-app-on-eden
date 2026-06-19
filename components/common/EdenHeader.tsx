@@ -27,11 +27,15 @@ export function EdenHeader() {
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4">
           <a
             href="https://www.eden.co.uk"
-            className="shrink-0 text-2xl font-bold tracking-tight text-primary"
+            className="shrink-0"
             aria-label="Eden home"
           >
-            eden
-            <span className="text-foreground">.co.uk</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/eden-logo.svg"
+              alt="Eden"
+              className="h-10 w-auto"
+            />
           </a>
 
           <div className="ml-auto flex items-center gap-5">
