@@ -6,6 +6,7 @@ import { buttonVariants } from "@components/ui/button";
 import { NAMESPACE_PATH } from "@lib/config";
 import { getCategoryFacets, searchEvents } from "@lib/algolia/events";
 import { getLocationStats, getRegions } from "@lib/locations";
+import { PromoteEventBanner } from "@components/events/PromoteEventBanner";
 import { ArrowRight, MapPin, Search } from "lucide-react";
 
 export const revalidate = 1800;
@@ -127,6 +128,11 @@ export default async function EventsHomePage() {
               </NsLink>
             ))}
           </div>
+        </section>
+
+        {/* Promote CTA */}
+        <section className="mb-12">
+          <PromoteEventBanner />
         </section>
 
         {/* Upcoming events */}

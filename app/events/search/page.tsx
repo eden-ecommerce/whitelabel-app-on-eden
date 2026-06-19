@@ -9,6 +9,7 @@ import { EventsActiveFilterBar } from "@components/events/EventsActiveFilterBar"
 import { SearchPagination } from "@components/events/SearchPagination";
 import { NoResultsCarousels } from "@components/events/NoResultsCarousels";
 import { PortableText } from "@components/ui/PortableText";
+import { PromoteEventBanner } from "@components/events/PromoteEventBanner";
 import {
   searchEvents,
   type EventSort,
@@ -135,6 +136,10 @@ export default async function SearchPage({
 
       <div className="mt-3">
         <EventsActiveFilterBar />
+      </div>
+
+      <div className="mt-5">
+        <PromoteEventBanner />
       </div>
 
       {/* Filters on the left, results on the right — full width, minimal whitespace */}

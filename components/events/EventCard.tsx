@@ -9,7 +9,7 @@ import {
   formatPrice,
   locationLine,
 } from "@lib/format";
-import { CalendarDays, Clock, MapPin, Wifi } from "lucide-react";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 export function EventCard({ event }: { event: EventHit }) {
   // Use the first occurrence timestamps for date/time display
@@ -47,12 +47,7 @@ export function EventCard({ event }: { event: EventHit }) {
             <CalendarDays className="h-10 w-10" />
           </div>
         )}
-        {event.online ? (
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground">
-            <Wifi className="h-3 w-3" /> Online
-          </span>
-        ) : null}
-        <div className="absolute right-3 top-3">
+        <div className="absolute right-3 top-3 z-10">
           <FavouriteButton eventId={event.id} variant="icon" />
         </div>
       </div>
@@ -68,9 +63,14 @@ export function EventCard({ event }: { event: EventHit }) {
               loading="lazy"
             />
           ) : null}
-          <span className="truncate text-xs font-medium text-muted-foreground">
+          <span className="min-w-0 flex-1 truncate text-xs font-medium text-muted-foreground">
             {event.organisationName ?? "Christian event"}
           </span>
+          {event.online ? (
+            <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+              Online
+            </span>
+          ) : null}
         </div>
 
         <h3 className="text-pretty text-base font-semibold leading-snug text-foreground group-hover:text-primary">

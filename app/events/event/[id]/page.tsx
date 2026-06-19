@@ -18,6 +18,7 @@ import { Breadcrumbs } from "@components/events/Breadcrumbs";
 import { EventCard } from "@components/events/EventCard";
 import { ShareButton } from "@components/events/ShareButton";
 import { FavouriteButton } from "@components/events/FavouriteButton";
+import { PromoteEventSidebarCta } from "@components/events/PromoteEventBanner";
 import { getEventById, searchEvents } from "@lib/algolia/events";
 import { formatDateRange, formatPrice } from "@lib/format";
 import { NAMESPACE_PATH } from "@lib/config";
@@ -382,6 +383,7 @@ export default async function EventPage({ params }: Props) {
               )}
             </div>
           </div>
+          <PromoteEventSidebarCta />
         </aside>
       </div>
 

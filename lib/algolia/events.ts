@@ -182,23 +182,26 @@ function buildSearchParams(params: SearchEventsParams) {
   const filters = [EVENTS_BASE_FILTER];
   if (typeof online === "boolean") filters.push(`online:${online}`);
 
-  // Per handoff doc: use occurrenceStartTimestampMin for the "from" bound and
-  // occurrenceEndTimestampMax for the "to" bound — these are the numeric attributes
-  // configured in Algolia's numericAttributesForFiltering.
-  // occurrenceStartTimestampMin = Math.min of all occurrence starts (earliest start)
-  // occurrenceEndTimestampMax  = Math.max of all occurrence ends (latest end)
-  const numericFilters: string[] = [];
-  if (typeof dateFrom === "number") {
-    numericFilters.push(`occurrenceStartTimestampMin >= ${dateFrom}`);
-  }
-  if (typeof dateTo === "number") {
-    numericFilters.push(`occurrenceEndTimestampMax <= ${dateTo}`);
+  // Use occurrenceStartTimestamps so recurring events are matched if ANY
+  // occurrence falls within the window, not just nextOccurrenceStartTimestamp.
+  const numericFilters: string[][] = [];
+  if (typeof dateFrom === "number" && typeof dateTo === "number") {
+    // Any occurrence that starts within [from, to]
+    numericFilters.push([
+      `occurrenceStartTimestamps >= ${dateFrom}`,
+      `occurrenceStartTimestamps <= ${dateTo}`,
+    ]);
+  } else if (typeof dateFrom === "number") {
+    numericFilters.push([`occurrenceStartTimestamps >= ${dateFrom}`]);
+  } else if (typeof dateTo === "number") {
+    numericFilters.push([`occurrenceStartTimestamps <= ${dateTo}`]);
   }
 
   const hasGeo = typeof lat === "number" && typeof lng === "number";
 
   const base: Record<string, unknown> = {
     filters: filters.join(" AND "),
+    // numericFilters is an array of arrays — Algolia ANDs the outer array, ORs the inner.
     ...(numericFilters.length > 0 ? { numericFilters } : {}),
     getRankingInfo: hasGeo,
   };

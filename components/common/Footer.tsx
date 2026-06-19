@@ -27,6 +27,7 @@ const FOOTER_COLUMNS = [
       { text: "Christian events", href: "https://www.eden.co.uk/events" },
       { text: "Blog", href: "https://www.eden.co.uk/blog" },
       { text: "Careers", href: "https://www.eden.co.uk/careers" },
+      { text: "Promote your event — free", href: "https://hub.eden.co.uk/dashboard/event-journey" },
     ],
   },
 ];
@@ -42,9 +43,10 @@ export function Footer({ geo }: FooterProps) {
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
-            <span className="text-xl font-bold text-primary">
-              eden<span className="text-foreground">.co.uk</span>
-            </span>
+            <a href="https://www.eden.co.uk" aria-label="Eden home">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/eden-logo.svg" alt="Eden" className="h-9 w-auto" />
+            </a>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               The UK&apos;s favourite Christian bookshop — books, Bibles, gifts and a
               directory of Christian events near you.
