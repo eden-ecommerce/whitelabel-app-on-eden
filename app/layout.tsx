@@ -12,20 +12,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Default OG image used when a page doesn't supply its own.
-// Absolute URL required by the OG spec — metadataBase resolves relative paths.
-const DEFAULT_OG_IMAGE = "https://www.eden.co.uk/events/og-default.png";
+const DEFAULT_OG_IMAGE = "https://whitelabel-app-on-eden.vercel.app/og-default.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.eden.co.uk"),
   title: {
-    default: "Christian Events Near You | Eden.co.uk",
-    template: "%s | Eden Events",
+    default: "Publish360 — White Label Digital Publishing | Eden",
+    template: "%s | Publish360",
   },
   description:
-    "Find Christian events, conferences, training and gatherings across the UK. Search by location or browse by region, county and town.",
+    "Publish360 is Eden's white-label digital publishing platform for independent publishers, content creators and charities. Sell eBooks, audiobooks, video and courses — under your own brand.",
   openGraph: {
-    siteName: "Eden Events",
+    siteName: "Publish360 by Eden",
     locale: "en_GB",
     type: "website",
     images: [
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Christian Events — Eden.co.uk",
+        alt: "Publish360 — White Label Digital Publishing by Eden",
       },
     ],
   },
@@ -42,7 +40,6 @@ export const metadata: Metadata = {
     site: "@edencouk",
     images: [DEFAULT_OG_IMAGE],
   },
-  // Use Eden's own favicon so the browser tab matches the main site.
   icons: {
     icon: "https://www.eden.co.uk/favicon.ico",
     shortcut: "https://www.eden.co.uk/favicon.ico",

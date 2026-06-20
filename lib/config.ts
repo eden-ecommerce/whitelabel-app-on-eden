@@ -22,9 +22,9 @@ import { API_BASE_URL, ASSET_BASE_URL } from "@lib/constants";
 export { API_BASE_URL, ASSET_BASE_URL };
 
 /** The single URL namespace this app is mounted under (no leading slash). */
-export const NAMESPACE = "events";
+export const NAMESPACE = "publish360";
 
-/** Absolute path prefix for the namespace, e.g. "/churches". */
+/** Absolute path prefix for the namespace, e.g. "/publish360". */
 export const NAMESPACE_PATH = `/${NAMESPACE}`;
 
 /**
