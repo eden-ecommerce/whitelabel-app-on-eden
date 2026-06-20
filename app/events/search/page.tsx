@@ -9,7 +9,7 @@ import { EventsActiveFilterBar } from "@components/events/EventsActiveFilterBar"
 import { SearchPagination } from "@components/events/SearchPagination";
 import { NoResultsCarousels } from "@components/events/NoResultsCarousels";
 import { PortableText } from "@components/ui/PortableText";
-import { PromoteEventBanner } from "@components/events/PromoteEventBanner";
+import { FavouritesCard, PromoteEventBanner } from "@components/events/PromoteEventBanner";
 import {
   searchEvents,
   type EventSort,
@@ -62,6 +62,18 @@ export async function generateMetadata({
             description,
             url: "https://www.eden.co.uk/events/search",
             type: "website",
+            images: [
+              {
+                url: "https://www.eden.co.uk/events/og-default.png",
+                width: 1200,
+                height: 630,
+                alt: "Christian Events — Eden.co.uk",
+              },
+            ],
+          },
+          twitter: {
+            card: "summary_large_image",
+            images: ["https://www.eden.co.uk/events/og-default.png"],
           },
         }),
   };
@@ -193,8 +205,9 @@ export default async function SearchPage({
         <EventsActiveFilterBar />
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto]">
         <PromoteEventBanner />
+        <FavouritesCard />
       </div>
 
       {/* Filters on the left, results on the right — full width, minimal whitespace */}

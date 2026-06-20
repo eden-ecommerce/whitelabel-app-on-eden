@@ -5,11 +5,6 @@ import { QueryProvider } from "@providers/query-provider";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ASSET_BASE_URL } from "@lib/constants";
-import appleIcon from "@public/apple-icon.png";
-import iconDark from "@public/icon-dark-32x32.png";
-import iconLight from "@public/icon-light-32x32.png";
-import iconSvg from "@public/icon.svg";
 import "@app/globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -17,6 +12,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Default OG image used when a page doesn't supply its own.
+// Absolute URL required by the OG spec — metadataBase resolves relative paths.
+const DEFAULT_OG_IMAGE = "https://www.eden.co.uk/events/og-default.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.eden.co.uk"),
@@ -30,35 +29,29 @@ export const metadata: Metadata = {
     siteName: "Eden Events",
     locale: "en_GB",
     type: "website",
-  },
-  twitter: {
-    site: "@edencouk",
-  },
-  icons: {
-    icon: [
+    images: [
       {
-        url: iconLight.src,
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: iconDark.src,
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: iconSvg.src,
-        type: "image/svg+xml",
+        url: DEFAULT_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Christian Events — Eden.co.uk",
       },
     ],
-    apple: appleIcon.src,
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@edencouk",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  // Use Eden's own favicon so the browser tab matches the main site.
+  icons: {
+    icon: "https://www.eden.co.uk/favicon.ico",
+    shortcut: "https://www.eden.co.uk/favicon.ico",
   },
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  themeColor: "#1a3d2b",
 };
 
 export default async function RootLayout({

@@ -7,6 +7,7 @@ import { ArrowLeft, Heart } from "lucide-react";
 export const metadata: Metadata = {
   title: "Your Saved Events",
   description: "Christian events you have saved on Eden.co.uk.",
+  robots: { index: false, follow: true },
 };
 
 export default function FavouritesPage() {

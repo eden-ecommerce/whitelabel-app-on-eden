@@ -38,7 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     event.description?.slice(0, 155).replace(/\s+$/, "") || undefined;
   const canonicalUrl = `https://www.eden.co.uk/events/${event.id}`;
-  const image = event.thumbnailUrl ?? undefined;
+  const DEFAULT_OG = "https://www.eden.co.uk/events/og-default.png";
+  const image = event.thumbnailUrl ?? DEFAULT_OG;
 
   return {
     title: event.title,
@@ -49,13 +50,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: canonicalUrl,
       type: "website",
-      ...(image ? { images: [{ url: image, alt: event.title }] } : {}),
+      images: [{ url: image, width: 1200, height: 630, alt: event.title }],
     },
     twitter: {
-      card: image ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: event.title,
       description,
-      ...(image ? { images: [image] } : {}),
+      images: [image],
     },
   };
 }
