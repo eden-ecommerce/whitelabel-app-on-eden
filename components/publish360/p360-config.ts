@@ -1,7 +1,5 @@
-import { NAMESPACE_PATH } from "@lib/config";
-
-/** Absolute path to the Publish360 microsite root, e.g. "/events/publish360". */
-export const P360_PATH = `${NAMESPACE_PATH}/publish360`;
+/** Absolute path to the Publish360 microsite root. */
+export const P360_PATH = "/publish360";
 
 /** Build an internal href within the Publish360 microsite. */
 export function p360Href(path: string): string {

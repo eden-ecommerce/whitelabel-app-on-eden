@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { text: "Top 50", href: "https://www.eden.co.uk/top-50" },
   { text: "Christian Jobs", href: "https://www.eden.co.uk/jobs" },
   { text: "Christian Events", href: NAMESPACE_PATH, internal: true },
-  { text: "Publish360", href: `${NAMESPACE_PATH}/publish360`, internal: true },
+  { text: "Publish360", href: "/publish360", internal: true },
 ];
 
 const USP_ITEMS = [
