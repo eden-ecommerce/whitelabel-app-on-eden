@@ -97,7 +97,7 @@ export function VolunteerMagicLinkScreen() {
           Submit availability — {selected.size} slot{selected.size !== 1 ? "s" : ""}
         </button>
       </div>
-      <BottomBar />
-    </ScreenRoot>
+      <TabBar />
+    </Screen>
   );
 }

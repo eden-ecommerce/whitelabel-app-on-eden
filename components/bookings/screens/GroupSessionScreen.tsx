@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AppBar, BottomBar, ScreenRoot } from "@components/event-manager/screens/chrome";
+import { Screen, AppHeader, TabBar } from "@components/event-manager/screens/chrome";
 import { Users, Clock, Check } from "lucide-react";
 
 const SESSIONS = [
@@ -17,8 +17,8 @@ export function GroupSessionScreen() {
   if (registered && selected) {
     const sess = SESSIONS.find((s) => s.id === selected)!;
     return (
-      <ScreenRoot>
-        <AppBar title="Supervision group" subtitle="Monthly cohort session" />
+      <Screen>
+        <AppHeader title="Supervision group" subtitle="Monthly cohort session" />
         <div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 text-center">
           <span className="flex size-14 items-center justify-center rounded-full bg-[#2D8C3C] text-white">
             <Check className="size-7" />
@@ -35,14 +35,14 @@ export function GroupSessionScreen() {
             Back
           </button>
         </div>
-        <BottomBar />
-      </ScreenRoot>
+        <TabBar />
+      </Screen>
     );
   }
 
   return (
-    <ScreenRoot>
-      <AppBar title="Supervision group" subtitle="Monthly cohort session" />
+    <Screen>
+      <AppHeader title="Supervision group" subtitle="Monthly cohort session" />
       <div className="flex-1 overflow-y-auto px-3 py-3">
         <p className="mb-3 text-[10px] leading-relaxed text-[#555]">
           Choose a session time. Places are limited — register now to secure yours.
@@ -73,14 +73,13 @@ export function GroupSessionScreen() {
                   )}
                 </div>
                 <div className="mt-1 flex items-center gap-3 text-[10px] text-[#555]">
-                  <span className="flex items-center gap-1"><Clock className="size-3" /> {sess.time}</span>
-                  <span className="flex items-center gap-1"><Users className="size-3" /> {sess.capacity} max</span>
+                  <span className="flex items-center gap-1"><Clock className="size-3" />{sess.time}</span>
+                  <span className="flex items-center gap-1"><Users className="size-3" />{sess.capacity} max</span>
                 </div>
               </button>
             );
           })}
         </div>
-
         {selected && (
           <button
             onClick={() => setRegistered(true)}
@@ -90,7 +89,7 @@ export function GroupSessionScreen() {
           </button>
         )}
       </div>
-      <BottomBar />
-    </ScreenRoot>
+      <TabBar />
+    </Screen>
   );
 }
