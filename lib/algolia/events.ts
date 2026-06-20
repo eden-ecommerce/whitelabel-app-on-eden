@@ -408,35 +408,23 @@ export async function getEventById(id: string): Promise<EventHit | null> {
   }
 }
 
-/** Fetch multiple events by their ids in one Algolia multiQuery request. */
+/** Fetch multiple events by their ids in one Algolia getObjects request. */
 export async function getEventsByIds(ids: string[]): Promise<EventHit[]> {
   if (ids.length === 0) return [];
   const client = getAlgoliaSearchClient();
   if (!client) return [];
 
-  const objectIDs = ids.map((id) => (id.startsWith("event:") ? id : `event:${id}`));
+  // objectIDs in organisationHub are prefixed: "event:<uuid>"
+  const requests = ids.map((id) => ({
+    indexName: organisationHubIndex,
+    objectID: id.startsWith("event:") ? id : `event:${id}`,
+  }));
 
   try {
-    const response = await client.search(
-      objectIDs.map((objectID) => ({
-        indexName: organisationHubIndex,
-        query: "",
-        params: {
-          filters: `${EVENTS_BASE_FILTER} AND objectID:${objectID}`,
-          hitsPerPage: 1,
-        },
-      })) as unknown as Parameters<typeof client.search>[0],
-    );
-
-    const hits: EventHit[] = [];
-    for (const result of response.results) {
-      if ("hits" in result) {
-        for (const hit of result.hits as RawHit[]) {
-          if (hit.entityType === "event") hits.push(mapHit(hit));
-        }
-      }
-    }
-    return hits;
+    const response = await client.getObjects({ requests });
+    return (response.results as (RawHit | null)[])
+      .filter((r): r is RawHit => r !== null && r.entityType === "event")
+      .map(mapHit);
   } catch {
     return [];
   }
