@@ -7,55 +7,53 @@
  * Private secrets (API keys, tokens, etc.) belong in `.env` — see `@lib/env-server`.
  *
  * ASSET_BASE_URL drives `assetPrefix` in `next.config.ts` so `/_next/static/*`
- * and imported `@public/*` assets resolve correctly behind the Eden Cloudflare Worker.
+ * and imported `@public/*` assets resolve from the public Vercel production
+ * alias — the only origin that serves them (see resolution notes below).
  */
 
-/**
- * Canonical proxy origin. The app is served behind the Eden Cloudflare Worker
- * at https://www.eden.co.uk/events, so `/_next/static/*` must resolve as
- *   https://www.eden.co.uk/events/_next/static/…
- * The Worker forwards /events/* back to this deployment.
- */
-export const ASSET_PRODUCTION_ORIGIN = "https://www.eden.co.uk/events";
 export const ASSET_DEV_ORIGIN = "http://localhost:3000";
-
-/** API origin (may differ from assets) */
-export const API_PRODUCTION_ORIGIN = "https://www.eden.co.uk/events";
 export const API_DEV_ORIGIN = "http://localhost:3000";
 
 // ── Origin resolution ────────────────────────────────────────────────────────
 //
-// The app is served behind a Cloudflare Worker at https://www.eden.co.uk/events
-// in TRUE production. But Vercel also creates "production" deployments for
-// branch pushes — those get VERCEL_ENV="production" too yet have no CF Worker
-// in front of them and are accessed via a *.vercel.app hostname.
+// Empirically verified against the live deployment (curl, HTTP status):
 //
-// Strategy: only use the CF Worker origin when VERCEL_URL actually resolves to
-// the canonical eden.co.uk domain. For every *.vercel.app deployment (whether
-// VERCEL_ENV is "production" or "preview") use the deployment's own VERCEL_URL
-// so the browser fetches assets from the same origin as the page.
+//   https://whitelabel-app-on-eden.vercel.app/_next/...        → 200  (public alias)
+//   https://whitelabel-app-on-eden-<hash>...vercel.app/_next/  → 401  (Deployment Protection)
+//   https://www.eden.co.uk/events/_next/...                    → 404  (Worker does NOT proxy /_next)
 //
-//   Real production  (VERCEL_URL contains "eden.co.uk")
-//     → ASSET_PRODUCTION_ORIGIN  (CF Worker forwards /_next/static/* back here)
+// Conclusions that drive the logic below:
 //
-//   Branch / preview deploys  (VERCEL_URL is *.vercel.app, even if ENV=production)
-//     → https://{VERCEL_URL}  (direct Vercel hostname — no proxy involved)
+//  1. VERCEL_URL (the deployment-specific *-<hash>.vercel.app host) is gated by
+//     Vercel Deployment Protection and returns 401 for assets — it must NEVER
+//     be used as the assetPrefix. This was the root cause of the unstyled page.
 //
-//   Local / v0 sandbox  (VERCEL_URL is undefined)
-//     → undefined  (no assetPrefix — same-origin assets)
+//  2. The Cloudflare Worker that serves the site at eden.co.uk does NOT forward
+//     /_next/* (404), so assets can't be served through eden.co.uk at all.
 //
-const vercelUrl = process.env.VERCEL_URL ?? "";
-const isTrueProduction = vercelUrl.includes("eden.co.uk");
-const isVercelDeploy = vercelUrl.length > 0;
+//  3. The ONLY origin that serves /_next/* publicly is the stable production
+//     alias exposed as VERCEL_PROJECT_PRODUCTION_URL
+//     (e.g. whitelabel-app-on-eden.vercel.app). Pointing assetPrefix there
+//     works in BOTH situations:
+//       • viewing the canonical *.vercel.app URL directly → same-origin, and
+//       • viewing eden.co.uk/<path> (HTML proxied by the Worker) → assets load
+//         cross-origin from the public Vercel alias (Vercel sets permissive
+//         CORS on static assets, and Next adds crossOrigin to its tags).
+//
+//   Production  → https://{VERCEL_PROJECT_PRODUCTION_URL}
+//   Preview     → undefined  (same-origin; previews are viewed on their own host)
+//   Local / v0  → undefined  (same-origin localhost)
+//
+const productionAlias = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const isProduction = process.env.VERCEL_ENV === "production" && !!productionAlias;
+const isPreview = process.env.VERCEL_ENV === "preview";
 
-export const ASSET_BASE_URL: string | undefined = isTrueProduction
-  ? ASSET_PRODUCTION_ORIGIN
-  : isVercelDeploy
-    ? `https://${vercelUrl}`
-    : undefined;
+export const ASSET_BASE_URL: string | undefined = isProduction
+  ? `https://${productionAlias}`
+  : undefined;
 
-export const API_BASE_URL: string = isTrueProduction
-  ? API_PRODUCTION_ORIGIN
-  : isVercelDeploy
-    ? `https://${vercelUrl}`
+export const API_BASE_URL: string = isProduction
+  ? `https://${productionAlias}`
+  : isPreview
+    ? "" // same-origin (relative) on the preview host
     : API_DEV_ORIGIN;
