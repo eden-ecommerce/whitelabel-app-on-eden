@@ -36,7 +36,9 @@ export const NAMESPACE_PATH = `/${NAMESPACE}`;
 export function assetUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return path;
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${ASSET_BASE_URL}${normalized}`;
+  // ASSET_BASE_URL is undefined in dev/preview (same-origin) — return a
+  // relative path rather than the string "undefined/...".
+  return ASSET_BASE_URL ? `${ASSET_BASE_URL}${normalized}` : normalized;
 }
 
 /**
