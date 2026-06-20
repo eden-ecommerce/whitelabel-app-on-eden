@@ -23,29 +23,31 @@ export const ASSET_DEV_ORIGIN = "http://localhost:3000";
 export const API_PRODUCTION_ORIGIN = "https://www.eden.co.uk/events";
 export const API_DEV_ORIGIN = "http://localhost:3000";
 
-// Origin resolution:
+// Origin resolution — keyed on VERCEL_ENV, not NODE_ENV:
 //
-// Production (VERCEL_ENV === "production"): use the canonical proxy origin so
-// assets load through the Cloudflare Worker on eden.co.uk. Using VERCEL_URL
-// here would point the browser straight at the Vercel deployment, bypass the
-// proxy, and break CSS/JS on eden.co.uk (unstyled HTML).
+// NODE_ENV is "production" for EVERY Vercel build (production AND preview),
+// so using it here caused preview deployments to set assetPrefix to
+// eden.co.uk/events — a URL that has no Cloudflare Worker pointing at the
+// preview deployment. The browser then 404s every CSS/JS chunk and the page
+// renders completely unstyled.
 //
-// Preview (VERCEL_ENV === "preview"): there is no proxy, so use the
-// deployment's own VERCEL_URL. This keeps the v0 preview iframe working and
-// avoids the "content blocked" error from a mismatched origin.
+// VERCEL_ENV is injected by Vercel before the build runs and correctly
+// distinguishes "production" (behind the CF Worker) from "preview" (direct
+// Vercel deployment URL) and local dev (undefined).
 //
-// Development: same-origin localhost.
-const vercelPreviewUrl =
-  process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : undefined;
+// Production  → CF Worker proxy origin   → assets via eden.co.uk/events
+// Preview     → deployment's VERCEL_URL  → assets from the preview hostname
+// Local / v0  → undefined (no prefix)   → same-origin assets
+export const ASSET_BASE_URL: string | undefined =
+  process.env.VERCEL_ENV === "production"
+    ? ASSET_PRODUCTION_ORIGIN
+    : process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : undefined;
 
-export const ASSET_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? (vercelPreviewUrl ?? ASSET_PRODUCTION_ORIGIN)
-    : ASSET_DEV_ORIGIN;
-
-export const API_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? (vercelPreviewUrl ?? API_PRODUCTION_ORIGIN)
-    : API_DEV_ORIGIN;
+export const API_BASE_URL: string =
+  process.env.VERCEL_ENV === "production"
+    ? API_PRODUCTION_ORIGIN
+    : process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : API_DEV_ORIGIN;

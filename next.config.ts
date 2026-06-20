@@ -18,11 +18,11 @@ const nextConfig: NextConfig = {
     // "@christian-360/next-design",
     // "@christian-360/sanity",
   ],
-  // Only prefix assets in production (behind the Cloudflare Worker). In
-  // development assets MUST be served from the same origin the page is served
-  // from — hardcoding `http://localhost:3000` here breaks the v0 preview and
-  // any proxied/sandbox host because the browser can't reach localhost.
-  assetPrefix: process.env.NODE_ENV === "production" ? ASSET_BASE_URL : undefined,
+  // ASSET_BASE_URL is already undefined in local/v0 dev (resolved via
+  // VERCEL_ENV in lib/constants.ts), so passing it directly is safe.
+  // It is set to the CF Worker origin on production builds and to the
+  // VERCEL_URL on preview builds. No NODE_ENV guard needed here.
+  assetPrefix: ASSET_BASE_URL,
   // v0 iterates quickly — builds tolerate TS errors during dev.
   // Before deploy: run `pnpm predeploy` (ts-check + lint + build) and fix all errors.
   typescript: {
