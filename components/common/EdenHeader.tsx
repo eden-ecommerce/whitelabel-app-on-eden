@@ -3,7 +3,6 @@
 import { EdenLogo } from "@components/common/EdenLogo";
 import { HeaderSearch } from "@components/common/HeaderSearch";
 import { NsLink } from "@components/ns-link";
-import { NAMESPACE_PATH } from "@lib/config";
 import { ShoppingBag, HelpCircle, User, Phone } from "lucide-react";
 
 const NAV_LINKS = [
@@ -16,7 +15,6 @@ const NAV_LINKS = [
   { text: "Cards", href: "https://www.eden.co.uk/cards" },
   { text: "Top 50", href: "https://www.eden.co.uk/top-50" },
   { text: "Christian Jobs", href: "https://www.eden.co.uk/jobs" },
-  { text: "Christian Events", href: NAMESPACE_PATH, internal: true },
   { text: "Publish360", href: "/publish360", internal: true },
 ];
 
