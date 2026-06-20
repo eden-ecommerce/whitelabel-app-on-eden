@@ -159,6 +159,34 @@
   }
 }
 
+/* ── Publish360 microsite design tokens ── */
+:root {
+  /* Brand: deep forest green (matches Eden primary) */
+  --p360-brand: oklch(0.35 0.09 158);
+  /* Ink: near-black, warm */
+  --p360-ink: oklch(0.18 0.015 155);
+  /* Surface: warm off-white, like aged paper */
+  --p360-surface: oklch(0.985 0.006 90);
+  /* Panel: slightly deeper cream for alternating sections */
+  --p360-panel: oklch(0.965 0.008 90);
+  /* Accent: pale green tint for icon backgrounds, highlights */
+  --p360-accent: oklch(0.93 0.04 155);
+  /* Border: subtle warm-grey line */
+  --p360-border: oklch(0.88 0.008 110);
+  /* Muted text */
+  --p360-muted: oklch(0.5 0.015 155);
+}
+
+@theme inline {
+  --color-p360-brand: var(--p360-brand);
+  --color-p360-ink: var(--p360-ink);
+  --color-p360-surface: var(--p360-surface);
+  --color-p360-panel: var(--p360-panel);
+  --color-p360-accent: var(--p360-accent);
+  --color-p360-border: var(--p360-border);
+  --color-p360-muted: var(--p360-muted);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
