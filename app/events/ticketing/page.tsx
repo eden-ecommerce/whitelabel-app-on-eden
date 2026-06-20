@@ -29,6 +29,7 @@ import {
   Armchair,
   ListChecks,
   ArrowRight,
+  CalendarClock,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -224,6 +225,27 @@ export default function TicketingOverviewPage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Bookings cross-link */}
+      <section className="mx-auto max-w-7xl px-4 pb-4">
+        <div className="flex items-start gap-4 rounded-2xl border border-primary/20 bg-primary/5 p-5">
+          <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <CalendarClock className="size-4" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-foreground">
+              Need a pastoral booking desk at your event?
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              Christian360 Bookings lets attendees reserve prayer and pastoral appointments inside the app — safeguarding rules enforced automatically, volunteer availability collected with a weekly magic link.{" "}
+              <NsLink href="/events/bookings" className="font-semibold text-primary underline underline-offset-2">
+                Explore Bookings
+              </NsLink>
+              .
+            </p>
           </div>
         </div>
       </section>

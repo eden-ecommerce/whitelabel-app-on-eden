@@ -166,27 +166,47 @@ export default function EventManagerHome() {
         </div>
       </section>
 
-      {/* Cross-link to Ticketing */}
+      {/* Cross-links to Ticketing and Bookings */}
       <section className="border-y border-border bg-accent/30 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                Also from Christian360
-              </span>
-              <h2 className="mt-2 text-balance font-serif text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Need to sell tickets too?
-              </h2>
-              <p className="mt-3 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">
-                Christian360 Ticketing runs alongside the Event Manager — gate programme sessions behind the right ticket, let attendees buy and show tickets inside your branded app, and manage everything from a single admin panel.
-              </p>
+          <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+            Also from Christian360
+          </span>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            {/* Ticketing */}
+            <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+              <div>
+                <h2 className="text-balance font-serif text-xl font-semibold tracking-tight text-foreground">
+                  Need to sell tickets too?
+                </h2>
+                <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
+                  Christian360 Ticketing gates programme sessions, lets attendees buy and show tickets in the app, and handles reserved seating — all from a single admin panel.
+                </p>
+              </div>
+              <NsLink
+                href="/events/ticketing"
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "self-start")}
+              >
+                Explore Ticketing
+              </NsLink>
             </div>
-            <NsLink
-              href="/events/ticketing"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "shrink-0")}
-            >
-              Explore Ticketing
-            </NsLink>
+            {/* Bookings */}
+            <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+              <div>
+                <h2 className="text-balance font-serif text-xl font-semibold tracking-tight text-foreground">
+                  Need a prayer ministry or pastoral booking desk?
+                </h2>
+                <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
+                  Christian360 Bookings lets conference attendees book prayer or pastoral appointments inside your app — safeguarding rules enforced automatically, no queuing at a desk.
+                </p>
+              </div>
+              <NsLink
+                href="/events/bookings"
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "self-start")}
+              >
+                Explore Bookings
+              </NsLink>
+            </div>
           </div>
         </div>
       </section>
