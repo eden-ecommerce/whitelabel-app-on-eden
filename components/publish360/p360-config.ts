@@ -7,7 +7,7 @@ export function p360Href(path: string): string {
   return `${P360_PATH}${normalized}`;
 }
 
-/** Primary conversion target — "Book a call". */
-export const DEMO_HREF = "mailto:publish360@edeninteractive.com?subject=Publish360%20Demo%20Request";
+/** Primary conversion target — the dedicated demo request page. */
+export const DEMO_HREF = `${P360_PATH}/demo`;
 
 export const CONTACT_HREF = DEMO_HREF;
