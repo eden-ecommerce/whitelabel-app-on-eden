@@ -24,12 +24,21 @@ export const metadata: Metadata = {
       "Find Christian events, conferences, training and worship nights across the UK.",
     url: "https://www.eden.co.uk/events",
     type: "website",
+    images: [
+      {
+        url: "https://www.eden.co.uk/events/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Christian Events — Eden.co.uk",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Christian Events Near You | Eden.co.uk",
     description:
       "Find Christian events, conferences, training and worship nights across the UK.",
+    images: ["https://www.eden.co.uk/events/og-default.png"],
   },
 };
 
